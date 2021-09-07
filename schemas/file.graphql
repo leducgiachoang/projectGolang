@@ -1,0 +1,47 @@
+type File{
+  id: ID!
+  source: String!
+  key: String!
+  file_name: String!
+  file_mime:  String
+  file_size: Int
+  url: String!
+  sku: String
+}
+
+type FileSigned{
+  key: String!
+  url: String!
+}
+
+input NewFile{
+  "id use in create clipart"
+  id: String
+  source: String!
+  key: String!
+  file_name: String!
+  file_mime: String!
+  file_size: Int!
+}
+
+input FileInput {
+  "id use in create clipart"
+  id: String
+  source: String
+  key: String!
+  fileName: String!
+  fileMime: String!
+  fileSize: Int!
+}
+
+extend type Query {
+  getFileUrl(file_id: String!): String 
+  getFileUrlFromKey(key: String!): String
+  getFileThumbnailUrl(file_id: String!): String 
+}
+
+extend type Mutation {
+  createSignedUrl(filename: String!, fileMime: String!): FileSigned 
+  createFile(input: NewFile!): File
+  updateFileUUID(file_id: ID!, uuid: String!): File
+}

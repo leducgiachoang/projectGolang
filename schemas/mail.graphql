@@ -1,0 +1,53 @@
+type Mail {
+  id: String!
+  subject: String!
+  body: String!
+  type: String!
+  schedule: String!
+  status: Boolean!
+  created_at: String!
+  updated_at: String!
+}
+
+input NewMail {
+  subject: String!
+  body: String!
+  type: String!
+  schedule: String!
+  site_id: String
+}
+
+input EditMail {
+  subject: String
+  body: String
+  type: String
+  schedule: String
+  status: Boolean
+}
+
+type Mails {
+  hits: [Mail!]
+  count: Int!
+}
+
+input MailFilter {
+  limit: Int
+  offset: Int
+  status: Boolean
+  site_id: String
+  user_id: String
+}
+
+extend type Query {
+  types: [String!]!
+  schedules: [String!]!
+  mails(filter: MailFilter): Mails!
+  mailById(id: String!): Mail!
+}
+
+extend type Mutation {
+  createMail(input: NewMail!): Mail!
+  updateMail(id: String!, input: EditMail!): Mail!
+  deleteMail(id: String!): Boolean!
+  sendOrderMail(id: String!, mail_id: String!): Boolean!
+}
